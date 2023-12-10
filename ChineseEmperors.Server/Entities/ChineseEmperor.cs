@@ -1,11 +1,13 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using AutoMapper;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ChineseEmperors.Server.Entities
 {
     public class ChineseEmperor
     {
         public int Id { get; set; }
-        public required string NickName { get; set; }
+        public string? NickName { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
         public string? EraName { get; set; }
@@ -16,7 +18,7 @@ namespace ChineseEmperors.Server.Entities
         public int? DeathYear { get; set; }
         public int? ReignStartYear { get; set; }
         public int? ReignEndYear { get; set; }
-        public string Bio { get; set; }
+        public string? Bio { get; set; }
 
 
         public int? FatherId { get; set; }
@@ -30,5 +32,14 @@ namespace ChineseEmperors.Server.Entities
 
         public int? PredecessorId { get; set; }
         public ChineseEmperor? Predecessor { get; set; }
+
+        public class ChineseEmperorProfile : Profile
+        {
+            public ChineseEmperorProfile()
+            {
+                CreateMap<ChineseEmperor, ChineseEmperor>()
+                    .ForAllMembers(opts => opts.Condition((src, dest, srcMember) => srcMember != null));
+            }
+        }
     }
 }
